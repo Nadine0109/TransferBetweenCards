@@ -48,7 +48,7 @@ public class MoneyTransferTest {
     }
 
     @Test
-    void shouldTransferMoneyToFirstCardFromItself () {
+    void shouldTransferMoneyToFirstCardFromItself() {
         var cardsInfo = DataHelper.getCardsInfo();
         var clientCards = new DashboardPage();
         int firstBalanceBefore = clientCards.getFirstCardBalance();
@@ -58,6 +58,7 @@ public class MoneyTransferTest {
         assertEquals(firstBalanceBefore, clientCards.getFirstCardBalance());
         assertEquals(secondBalanceBefore, clientCards.getSecondCardBalance());
     }
+
     @Test
     void shouldTransferMoneyToSecondCardFromItself() {
         var cardsInfo = DataHelper.getCardsInfo();
@@ -68,5 +69,18 @@ public class MoneyTransferTest {
         transferThis.transfer(Integer.toString(sumToTransfer), cardsInfo, 1);
         assertEquals(firstBalanceBefore, clientCards.getFirstCardBalance());
         assertEquals(secondBalanceBefore, clientCards.getSecondCardBalance());
+    }
+
+    @Test
+    void shouldTransferMoneyToFirstCardWihKopecks() {
+        var cardsInfo = DataHelper.getCardsInfo();
+        var clientCards = new DashboardPage();
+        float firstBalanceBefore = clientCards.getFirstCardBalance();
+        float secondBalanceBefore = clientCards.getSecondCardBalance();
+        float sumToTransferWithKopecks = (float) 50.7;
+        var transferThis = clientCards.transferToFirst();
+        transferThis.transfer(Float.toString(sumToTransferWithKopecks), cardsInfo, 1);
+        assertEquals(firstBalanceBefore + sumToTransferWithKopecks, clientCards.getFirstCardBalance());
+        assertEquals(secondBalanceBefore - sumToTransferWithKopecks, clientCards.getSecondCardBalance());
     }
 }

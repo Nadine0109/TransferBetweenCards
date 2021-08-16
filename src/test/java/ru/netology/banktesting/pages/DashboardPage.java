@@ -26,7 +26,6 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-
     public int getFirstCardBalance() {
         val text = cards.first().text();
         return extractBalance(text);
@@ -46,5 +45,6 @@ public class DashboardPage {
         transferToSecondCardButton.click();
         return new TransferBetweenCardsPage();
     }
+
 }
 
